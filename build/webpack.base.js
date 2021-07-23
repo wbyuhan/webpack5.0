@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const DemoPlugin = require('../plugin/DemoPlugin')
 
 const rootDir = process.cwd();
 
@@ -59,7 +60,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: [{
-                        loader: path.resolve('../loader/console.js'),
+                        loader: path.resolve('./loader/console.js'),
                         options: { /* ... */ }
                     },
 
@@ -80,6 +81,7 @@ module.exports = {
             inject: 'body',
             scriptLoading: 'blocking',
         }),
+
         new CopyWebpackPlugin({
             patterns: [{
                 from: '*.js',
@@ -91,6 +93,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
         }),
-        new OptimizeCssPlugin()
+        new OptimizeCssPlugin(),
+        new DemoPlugin({
+            filename: "index.js"
+        }),
     ]
 }
