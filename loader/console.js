@@ -1,5 +1,4 @@
 module.exports = function(content) {
-    console.log('%c 🍮 content: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', content);
     return handleConsole(content)
 }
 

@@ -19,29 +19,8 @@ class DemoPlugin {
         // tapAsync ：以异步方式触发钩子；
         // tapPromise ：以异步方式触发钩子，返回 Promise；
         compiler.hooks.compilation.tap("DemoPlugin", (compilation, callback) => {
-            // console.log('%c 🍹 compilation: ', 'font-size:20px;background-color: #F5CE50;color:#fff;', compilation);
-            // 插件逻辑 调用compilation提供的plugin方法.
-
-            // compilation.getHooks('html-webpack-plugin-before-html-processing', (htmlPluginData, callback) => {
-            //     // 读取并修改 script 上 src 列表
-            //     let jsScr = htmlPluginData.assets.js[0];
-            //     htmlPluginData.assets.js = [];
-            //     let result = `
-            //         <script>
-            //             let scriptDOM = document.createElement("script");
-            //             let jsScr = "./${jsScr}";
-            //             scriptDOM.src = jsScr + "?" + new Date().getTime();
-            //             document.body.appendChild(scriptDOM)
-            //         </script>
-            //     `;
-            //     let resultHTML = htmlPluginData.html.replace(
-            //         "<!--SetScriptTimestampPlugin inset script-->", result
-            //     );
-            //     htmlPluginData.html = resultHTML
-            // })
             HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync("DemoPlugin", (data, cb) => {
-                console.log('%c 🍧 data: ', 'font-size:20px;background-color: #FCA650;color:#fff;', data);
-                const jsSrc = data.bodyTags[0].attributes.scr;
+                const jsSrc = data.bodyTags[0].attributes.src;
                 const result = `<script>
                     let scriptDOM = document.createElement("script");
                     let jsScr = "./${jsSrc}";
@@ -50,7 +29,9 @@ class DemoPlugin {
                     </script>`
 
                 const resultHTML = data.html.replace("<!--SetScriptTimestampPlugin inset script-->", result);
+
                 data.html = resultHTML
+                cb(null, data)
             })
         })
     }
