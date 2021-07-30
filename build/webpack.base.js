@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DemoPlugin = require('../plugin/DemoPlugin')
+const DeletePlugin = require('../plugin/DeletePlugin')
 
 const rootDir = process.cwd();
 
@@ -97,5 +98,8 @@ module.exports = {
         new DemoPlugin({
             filename: "index.js"
         }),
+        new DeletePlugin({
+            exclude: [/\.css$/i, "index.html"],
+        })
     ]
 }

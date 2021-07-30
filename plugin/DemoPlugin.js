@@ -32,7 +32,9 @@ class DemoPlugin {
 
                 data.html = resultHTML
                 cb(null, data)
+                callback()
             })
+
         })
     }
 }
