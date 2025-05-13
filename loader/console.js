@@ -5,3 +5,6 @@ module.exports = function(content) {
 function handleConsole(content) {
     return content.replace(/console.log\(['|"](.*?)['|"]\)/, '')
 }
+function handleTest(content) {
+    return `${content}`
+}
